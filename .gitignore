@@ -1,0 +1,62 @@
+# OS
+Thumbs.db
+.DS_Store
+
+# C#
+obj
+**/bin/Debug
+**/bin/Release
+**/packages
+
+# IDEs
+*.userprefs
+*.user
+test-results
+.vs
+.vscode
+.idea
+DerivedData
+xcuserdata
+build
+
+# Unity
+/Library
+/Temp
+/Logs
+/UserSettings
+/*.csproj
+/*.sln
+*.unitypackage
+.gradle
+**/Assets/Plugins/Editor/JetBrains
+**/Assets/Plugins/Editor/JetBrains.meta
+
+# Blender
+*.blend1
+
+# Jenny
+Jenny.zip
+Jenny.zip.meta
+*.userproperties
+
+# bee
+.bee/logs
+CHANGES.md
+CHANGES.md.meta
+
+# fastlane
+fastlane/README.md
+fastlane/report.xml
+
+# Firebase
+crashlytics_build_id.xml
+crashlytics_build_id.xml.meta
+crashlytics_unity_version.xml.meta
+crashlytics_unity_version.xml
+remote_config_data
+Assets/GeneratedLocalRepo
+Assets/GeneratedLocalRepo.meta
+
+# Project
+Build
+.vsconfig
