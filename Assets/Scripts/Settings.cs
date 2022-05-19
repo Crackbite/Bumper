@@ -7,8 +7,12 @@ public class Settings
     public Settings(string defaultNickname = "Player")
     {
         _defaultNickname = defaultNickname;
-        Nickname = PlayerPrefs.HasKey("Nickname") ? PlayerPrefs.GetString("Nickname") : _defaultNickname;
-        TotalKill = PlayerPrefs.HasKey("TotalKill") ? PlayerPrefs.GetInt("TotalKill") : 0;
+
+        const string NicknameKey = "Nickname";
+        const string TotalKillKey = "TotalKill";
+
+        Nickname = PlayerPrefs.HasKey(NicknameKey) ? PlayerPrefs.GetString(NicknameKey) : _defaultNickname;
+        TotalKill = PlayerPrefs.HasKey(TotalKillKey) ? PlayerPrefs.GetInt(TotalKillKey) : 0;
     }
 
     public string Nickname { get; }

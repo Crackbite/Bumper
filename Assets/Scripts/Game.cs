@@ -12,6 +12,20 @@ public class Game : MonoBehaviour
 
     private EnemySpawner _enemySpawner;
 
+    public void OnPlayButtonClicked()
+    {
+        _startScreen.Close();
+        _preGameScreen.Open();
+    }
+
+    public void OnGameStarted()
+    {
+        _enemySpawner.Spawn();
+        _preGameScreen.Close();
+        _gameScreen.Open();
+        _platform.StartChangeSize();
+    }
+
     private void Start()
     {
         _enemySpawner = GetComponent<EnemySpawner>();
@@ -52,20 +66,6 @@ public class Game : MonoBehaviour
         _endScreen.Close();
         _startScreen.Open();
         Time.timeScale = 1;
-    }
-
-    public void OnPlayButtonClicked()
-    {
-        _startScreen.Close();
-        _preGameScreen.Open();
-    }
-
-    public void OnGameStarted()
-    {
-        _enemySpawner.Spawn();
-        _preGameScreen.Close();
-        _gameScreen.Open();
-        _platform.StartChangeSize();
     }
 
     private void OnGameEnded()

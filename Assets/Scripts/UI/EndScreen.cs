@@ -16,6 +16,34 @@ public class EndScreen : Screen
     [SerializeField] private Button _continueButton;
     [SerializeField] private ParticleSystem _fireworks;
 
+    public event UnityAction ContinueButtonClicked;
+    public event UnityAction GameEnded;
+
+    public void OnContinueButtonClicked()
+    {
+        ContinueButtonClicked?.Invoke();
+    }
+
+    public void OpenVictory()
+    {
+        _defeatLabel.gameObject.SetActive(false);
+        _killedBy.gameObject.SetActive(false);
+        _victoryLabel.gameObject.SetActive(true);
+        base.Open();
+
+        Instantiate(_fireworks, _player.transform.position, Quaternion.identity);
+        StartCoroutine(PreGameEnd());
+    }
+
+    public void OpenDefeat()
+    {
+        _victoryLabel.gameObject.SetActive(false);
+        _defeatLabel.gameObject.SetActive(true);
+
+        base.Open();
+        GameEnded?.Invoke();
+    }
+
     private void OnEnable()
     {
         _player.RankChanged += OnPlayerRankChanged;
@@ -37,37 +65,9 @@ public class EndScreen : Screen
         _rank.text = rank.ToString();
     }
 
-    public event UnityAction ContinueButtonClicked;
-    public event UnityAction GameEnded;
-
-    public void OnContinueButtonClicked()
-    {
-        ContinueButtonClicked?.Invoke();
-    }
-
-    public void OpenVictory()
-    {
-        _defeatLabel.gameObject.SetActive(false);
-        _killedBy.gameObject.SetActive(false);
-        _victoryLabel.gameObject.SetActive(true);
-        base.Open();
-
-        Instantiate(_fireworks, _player.transform.position, Quaternion.identity);
-        StartCoroutine(PreGameEnd());
-    }
-
     private IEnumerator PreGameEnd()
     {
         yield return new WaitForSeconds(_fireworks.main.startLifetime.constantMax);
-        GameEnded?.Invoke();
-    }
-
-    public void OpenDefeat()
-    {
-        _victoryLabel.gameObject.SetActive(false);
-        _defeatLabel.gameObject.SetActive(true);
-
-        base.Open();
         GameEnded?.Invoke();
     }
 

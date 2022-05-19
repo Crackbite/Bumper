@@ -11,13 +11,6 @@ public class Platform : MonoBehaviour
     private Vector3 _startPosition;
     private Quaternion _startRotation;
 
-    private void Start()
-    {
-        _startPosition = transform.position;
-        _startRotation = transform.rotation;
-        _startlocalScale = transform.localScale;
-    }
-
     public void StartChangeSize()
     {
         _changeSizeCoroutine = StartCoroutine(ChangeSize());
@@ -32,6 +25,13 @@ public class Platform : MonoBehaviour
 
         transform.localScale = _startlocalScale;
         transform.SetPositionAndRotation(_startPosition, _startRotation);
+    }
+
+    private void Start()
+    {
+        _startPosition = transform.position;
+        _startRotation = transform.rotation;
+        _startlocalScale = transform.localScale;
     }
 
     private IEnumerator ChangeSize()

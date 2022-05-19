@@ -44,8 +44,13 @@ public class EnemySpawner : MonoBehaviour
 
             var headComponent = enemy.GetComponentInChildren<Head>();
             var rendererComponent = headComponent.GetComponent<Renderer>();
-            rendererComponent.material.color = Random.ColorHSV(_colorHueMin, _colorHueMax, _colorSaturationMin,
-                _colorSaturationMax, _colorValueMin, _colorValueMax);
+            rendererComponent.material.color = Random.ColorHSV(
+                _colorHueMin,
+                _colorHueMax,
+                _colorSaturationMin,
+                _colorSaturationMax,
+                _colorValueMin,
+                _colorValueMax);
             enemy.transform.LookAt(_enemyLookObject);
 
             enemy.Died += EnemyOnDied;

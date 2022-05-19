@@ -9,6 +9,14 @@ public class PreGameScreen : Screen
     [SerializeField] private string[] _status = { "Ready", "Steady", "GO!" };
     [SerializeField] private float _secondsBeetwenStatus = .8f;
 
+    public event UnityAction GameStarted;
+
+    public override void Open()
+    {
+        base.Open();
+        StartCoroutine(ChangeStatus());
+    }
+
     private IEnumerator ChangeStatus()
     {
         var waitForSeconds = new WaitForSeconds(_secondsBeetwenStatus);
@@ -20,13 +28,5 @@ public class PreGameScreen : Screen
         }
 
         GameStarted?.Invoke();
-    }
-
-    public event UnityAction GameStarted;
-
-    public override void Open()
-    {
-        base.Open();
-        StartCoroutine(ChangeStatus());
     }
 }

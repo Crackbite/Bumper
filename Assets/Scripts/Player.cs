@@ -9,16 +9,12 @@ public class Player : Character
     private int _rank;
     private Settings _settings;
 
+    public event UnityAction Won;
+    public event UnityAction Reset;
+    public event UnityAction<int> KillChanged;
+    public event UnityAction<int> RankChanged;
+
     public int TotalKill { get; private set; }
-
-    private void Start()
-    {
-        _settings = new Settings();
-        Nickname = _settings.Nickname;
-        TotalKill = _settings.TotalKill;
-
-        _mover = GetComponent<PlayerMover>();
-    }
 
     public void SetNickname(string nickname)
     {
@@ -69,8 +65,12 @@ public class Player : Character
         Won?.Invoke();
     }
 
-    public event UnityAction Won;
-    public event UnityAction Reset;
-    public event UnityAction<int> KillChanged;
-    public event UnityAction<int> RankChanged;
+    private void Start()
+    {
+        _settings = new Settings();
+        Nickname = _settings.Nickname;
+        TotalKill = _settings.TotalKill;
+
+        _mover = GetComponent<PlayerMover>();
+    }
 }

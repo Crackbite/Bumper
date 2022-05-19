@@ -10,15 +10,7 @@ public class StartScreen : Screen
     [SerializeField] private TMP_Text _totalKill;
     [SerializeField] private Button _playButton;
 
-    private void OnEnable()
-    {
-        _playButton.onClick.AddListener(OnPlayButtonClick);
-    }
-
-    private void OnDisable()
-    {
-        _playButton.onClick.RemoveListener(OnPlayButtonClick);
-    }
+    public event UnityAction PlayButtonClicked;
 
     public override void Open()
     {
@@ -35,11 +27,19 @@ public class StartScreen : Screen
         _nickname.interactable = false;
     }
 
-    public event UnityAction PlayButtonClicked;
-
     public void OnPlayButtonClick()
     {
         _player.SetNickname(_nickname.text);
         PlayButtonClicked?.Invoke();
+    }
+
+    private void OnEnable()
+    {
+        _playButton.onClick.AddListener(OnPlayButtonClick);
+    }
+
+    private void OnDisable()
+    {
+        _playButton.onClick.RemoveListener(OnPlayButtonClick);
     }
 }

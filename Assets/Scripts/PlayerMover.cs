@@ -11,6 +11,18 @@ public class PlayerMover : MonoBehaviour
     private Vector3 _startlocalScale;
     private Vector3 _startPosition;
 
+    public void OnGameStarted()
+    {
+        _isGameStart = true;
+    }
+
+    public void ResetMover()
+    {
+        _isGameStart = false;
+        transform.localScale = _startlocalScale;
+        transform.SetPositionAndRotation(_startPosition, Quaternion.Euler(0, 0, 0));
+    }
+
     private void Awake()
     {
         _playerInput = new PlayerInput();
@@ -51,17 +63,5 @@ public class PlayerMover : MonoBehaviour
     {
         _playerInput.Disable();
         _preGameScreen.GameStarted -= OnGameStarted;
-    }
-
-    public void OnGameStarted()
-    {
-        _isGameStart = true;
-    }
-
-    public void ResetMover()
-    {
-        _isGameStart = false;
-        transform.localScale = _startlocalScale;
-        transform.SetPositionAndRotation(_startPosition, Quaternion.Euler(0, 0, 0));
     }
 }

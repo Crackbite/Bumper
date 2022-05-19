@@ -18,18 +18,37 @@ public class Character : MonoBehaviour
     [SerializeField] private ParticleSystem _buttonHit;
     [SerializeField] private ParticleSystem _waterSplash;
 
-    private readonly int _buttonPressedHash = Animator.StringToHash("ButtonPressed");
-    private bool _isColliding;
+    protected Rigidbody Rigidbody;
 
+    private readonly int _buttonPressedHash = Animator.StringToHash("ButtonPressed");
+
+    private bool _isColliding;
     private GameObject _lastGameObjectCollision;
     private Vector3 _newScale;
     private Coroutine _smoothlyIncreaseSizeCoroutine;
     private bool _waterEntered;
 
-    protected Rigidbody Rigidbody;
+    public event UnityAction<Character, GameObject> Died;
 
     public string Nickname { get; protected set; }
     public bool IsDied { get; protected set; }
+
+    public void IncreaseSize()
+    {
+        _newScale = transform.localScale + new Vector3(_increaseSize, _increaseSize, _increaseSize);
+
+        if (_smoothlyIncreaseSizeCoroutine != null)
+        {
+            StopCoroutine(SmoothlyIncreaseSize());
+        }
+
+        _smoothlyIncreaseSizeCoroutine = StartCoroutine(SmoothlyIncreaseSize());
+    }
+
+    public void DecreaseImpactForce()
+    {
+        _impactForce -= _decreaseImpactForce;
+    }
 
     private void Awake()
     {
@@ -94,20 +113,6 @@ public class Character : MonoBehaviour
         }
     }
 
-    public event UnityAction<Character, GameObject> Died;
-
-    public void IncreaseSize()
-    {
-        _newScale = transform.localScale + new Vector3(_increaseSize, _increaseSize, _increaseSize);
-
-        if (_smoothlyIncreaseSizeCoroutine != null)
-        {
-            StopCoroutine(SmoothlyIncreaseSize());
-        }
-
-        _smoothlyIncreaseSizeCoroutine = StartCoroutine(SmoothlyIncreaseSize());
-    }
-
     private IEnumerator SmoothlyIncreaseSize()
     {
         var waitForSeconds = new WaitForEndOfFrame();
@@ -117,10 +122,5 @@ public class Character : MonoBehaviour
             transform.localScale = Vector3.Lerp(transform.localScale, _newScale, _increaseSizeSpeed * Time.deltaTime);
             yield return waitForSeconds;
         }
-    }
-
-    public void DecreaseImpactForce()
-    {
-        _impactForce -= _decreaseImpactForce;
     }
 }
